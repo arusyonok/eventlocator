@@ -1,0 +1,89 @@
+{% extends "index.html" %}
+
+{% block navbarheadlink %}
+    <a class="navbar-brand" href="{{ url_for('home') }}">Hello {{ session.username }}</a>
+{% endblock %}
+
+{% block other_links %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('concerts') }}">Find nearby concerts</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <script>
+        $(document).ready(function() {
+          var errorMessage = "";
+          var coordLatitude = "";
+          var coordLongitude = "";
+
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(storePositions, showError);
+          } else {
+            alert("Geolocation is not supported by this browser.")
+          }
+
+          function storePositions(position) {
+            coordLatitude = position.coords.latitude;
+            coordLongitude = position.coords.longitude;
+
+            $.ajax({
+            url: '/store_location',
+              data: {
+                latitude: coordLatitude,
+                longitude: coordLongitude,
+              },
+              type: 'POST',
+              success: function(response) {
+                if (response.status == "nok") {
+                  alert(response.message)
+                }
+              }
+            });
+          }
+
+          function showError(error) {
+            switch(error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage = "User denied the request for Geolocation. Can't find concerts nearby."
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = "Location information is unavailable. Can't find concerts nearby."
+                break;
+              case error.TIMEOUT:
+                errorMessage = "The request to get user location timed out. Can't find concerts nearby. "
+                break;
+              case error.UNKNOWN_ERROR:
+                errorMessage = "An unknown error occurred. Can't find concerts nearby."
+                break;
+            }
+            alert(errorMessage)
+          }
+        });
+    </script>
+  <h3>These are your top and followed artists</h3>
+
+  <div class="row">
+    {% for artist in all_artists %}
+        <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="{{ artist.spotify_url }}"><img class="card-img-top" src="{{ artist.image_url }}" alt=""></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="{{ artist.spotify_url }}">{{ artist.name }}</a>
+                  </h4>
+                  <p class="card-text">
+                      <b>{{ artist.user_relation }}</b> <br/><br/>
+                      {% for genre in artist.genres %}
+                        {{ genre }}
+                      {% endfor %}
+                  </p>
+                </div>
+              </div>
+        </div>
+    {% endfor %}
+  </div>
+{% endblock %}

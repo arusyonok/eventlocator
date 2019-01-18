@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+
+{% block pageid %}loginpage{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3 no-float"></div>
+        <div class="col-md-4 login-form">
+            <h2>This is where the magic happens (not really).</h2>
+            <p>Some text goes here</p>
+            <a href="{{auth_spotify_url}}">Login with Spotify</a>
+        </div>
+        <div class="col-md-3 no-float"></div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

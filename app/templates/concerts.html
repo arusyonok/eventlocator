@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+
+{% block navbarheadlink %}
+    <a class="navbar-brand" href="{{ url_for('home') }}">Hello {{ session.username }}</a>
+{% endblock %}
+
+{% block other_links %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('home') }}">Show Artists</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <h3>Here are some of the events that are near you.</h3>
+    <div class="row">
+    {% for event in events %}
+        <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="{{ event.url }}"><img class="card-img-top" src="{{ event.image_url }}" alt=""></a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="{{ event.url }}">{{ event.name }}</a>
+                  </h4>
+                  <p class="card-text">
+                      <b>{{ event.artist_name }}</b> <br/><br/>
+                      {{ event.datetime }} <br/>
+                      {% for venue in event.venues %}
+                        {{ venue.name }} <br/> {{ venue.city }}, {{ venue.country }}
+                      {% endfor %}
+                  </p>
+                </div>
+              </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
