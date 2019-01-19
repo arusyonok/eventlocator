@@ -9,7 +9,8 @@ def call(method, url, **kwargs):
         response = requests.post(url, **kwargs)
     else:
         raise Exception('Please specify call method.')
-
+    print(response)
+    print(response.json())
     if response.status_code is 200:
         return response
 
