@@ -2,14 +2,6 @@ from app import app
 from flask import render_template
 
 
-class ResponseException(Exception):
-    pass
-
-
-class MissingValueException(ValueError):
-    pass
-
-
 class EventLocatorException(Exception):
     pass
 
@@ -33,17 +25,6 @@ def internal_server_error(error):
     if error is None:
         error = "The server encountered an internal error."
     return default_error_view(error), 500
-
-
-@app.errorhandler(MissingValueException)
-def massing_value_handler(error):
-    return default_error_view(error)
-
-
-@app.errorhandler(ResponseException)
-def response_exception_handler(code_message):
-    return default_error_view(code_message)
-
 
 @app.errorhandler(EventLocatorException)
 def call_exception_handler(error):

@@ -14,6 +14,6 @@ def call(method, url, **kwargs):
         return response
 
     code_message = str(response.status_code) + ' ' + str(response.reason)
-    raise errors.ResponseException(code_message)
+    raise errors.EventLocatorException(code_message)
 
 

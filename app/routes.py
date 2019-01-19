@@ -16,7 +16,7 @@ simpleCacheObject = SimpleCache()
 @app.route('/home')
 def home():
     if not spotifyObject.client_id or not spotifyObject.client_secret or not spotifyObject.redirect_uri:
-        raise errors.MissingValueException("Some of the core values are missing. Contact the admin.")
+        raise errors.EventLocatorException("Some of the core values are missing. Contact the admin.")
 
     if is_logged_in():
         all_artists = get_artists(spotifyObject)
