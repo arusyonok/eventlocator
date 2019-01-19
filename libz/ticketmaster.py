@@ -15,7 +15,7 @@ class Ticketmaster:
 
         for keyword in keywords:
             full_url = url + '&keyword=' + keyword
-            print(full_url)
+
             response = call('get', full_url)
             response_json = response.json()
             if response_json['page']['totalElements'] == 0:
