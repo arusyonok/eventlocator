@@ -8,7 +8,7 @@ EVENTS_FULL_URL = TICKETMASTER_API_URL + 'events.json?apikey=' + TICKETMASTER_AP
 
 class Ticketmaster:
 
-    def get_events(self, keywords, country=''):
+    def get_events(self, keywords, country='fi'):
         event_data = []
 
         url = EVENTS_FULL_URL + '&locale=' + country
