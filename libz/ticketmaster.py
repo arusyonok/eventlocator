@@ -1,3 +1,4 @@
+import time
 from config import TICKETMASTER_API_KEY
 from common import call
 
@@ -19,7 +20,7 @@ class Ticketmaster:
             response_json = response.json()
             if response_json['page']['totalElements'] == 0:
                 continue
-
+            time.sleep(1)
             for event in response_json['_embedded']['events']:
                 venue_list = []
 
