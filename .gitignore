@@ -105,3 +105,9 @@ venv.bak/
 
 # idea
 .idea/
+
+# txt files
+*.txt
+
+# Procfile
+Procfile
